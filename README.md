@@ -1,7 +1,7 @@
 # Cliffside-practice-mod
 A simple practice mod for Rubyred's Cliffside
 
-<img src="https://github.com/CelesteClassic/Celeste2PracMod/blob/main/preview.gif?raw=true">
+<img src="https://github.com/uShldGetCeleste/Cliffside-practice-mod/blob/main/preview.gif?raw=true">
 
 # Controls
 s: previous level
