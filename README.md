@@ -10,3 +10,7 @@ A simple practice mod for Rubyred's Cliffside
 | F | Next Level |
 | D | Restart Level |
 | A | Toggle Gemskip (2300m+) |
+
+# Notes
+- Having trouble uploading compiled Mac build
+- I don't even know lua so the code is probably pretty messy
