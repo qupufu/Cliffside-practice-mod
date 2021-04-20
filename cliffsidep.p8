@@ -1,8 +1,9 @@
 pico-8 cartridge // http://www.pico-8.com
 version 30
 __lua__
---~cliffside~
---mod by: rubyred
+--~cliffside practice mod~
+--mod by: timm
+--original by: rubyred
 
 --built with:
 --~evercore~
@@ -14,6 +15,8 @@ __lua__
 
 --original game by:
 --matt thorson + noel berry
+
+--practice mod v1.1
 
 -- [data structures]
 
@@ -358,6 +361,10 @@ player_spawn={
       end
     -- landing and spawning player object
     elseif this.state==2 then
+
+  --reset timer after falling
+  seconds,minutes=0,0
+  
       this.delay-=1
       this.spr=6
       if this.delay<0 then
@@ -588,7 +595,7 @@ fly_fruit={
       hit.djump=max_djump
       sfx_timer=20
       sfx(13)
-      got_fruit[1+lvl_id]=true
+      got_fruit[1+lvl_id]=false
       init_object(lifeup,this.x,this.y)
       destroy_object(this)
     end
@@ -659,8 +666,11 @@ fake_wall={
     sspr(0,32,16,16,this.x,this.y)
   end
 }
-
+--[[
 secret_effect = {
+--gemskip seceret at 300m
+--disabled in practice mod
+
   init=function(this)
     this.timer=10
     shake=20
@@ -680,7 +690,7 @@ secret_effect = {
     rectfill(this.x-16*(this.timer/10), 0, this.x+16*(this.timer/10), 128, 7)
   end
 }
-
+--]]
 key={
   if_not_fruit=true,
   update=function(this)
@@ -922,7 +932,7 @@ flag={
       ?"deaths:"..deaths,48,24,7
     elseif this.check(player,0,0) then
       sfx(55)
-      sfx_timer,this.show,time_ticking=30,true,false
+      sfx_timer,this.show,time_ticking=30,true,true
     end
   end
 }
@@ -1574,7 +1584,8 @@ function num2hex(number)
  return #resultstr==0 and "00" or #resultstr==1 and "0"..resultstr or resultstr
 end
 -->8
---practice mode
+--practice mod
+--code is really messy :l
 
 function practice_mode()
 	level_skip()
@@ -1631,8 +1642,7 @@ function level_skip()
 end
 
 function gem_skip()
- --gemskip + check how many
- --dashes you should have
+ --gemskip toggle
 	if lvl_id<21 then max_djump=1 end
 	if lvl_id>21 then
 		if btnp(5, 1) then
