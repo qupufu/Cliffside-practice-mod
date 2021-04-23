@@ -16,7 +16,7 @@ __lua__
 --original game by:
 --matt thorson + noel berry
 
---practice mod v1.1
+--practice mod v1.2
 
 -- [data structures]
 
@@ -1584,9 +1584,15 @@ function num2hex(number)
  return #resultstr==0 and "00" or #resultstr==1 and "0"..resultstr or resultstr
 end
 -->8
+menuitem(1, "retry", function() retry() end)
+function retry()
+	load_level(lvl_id)
+end
+
 --practice mod
 --code is really messy :l
 
+--idk why it's mode and not mod
 function practice_mode()
 	level_skip()
 	gem_skip()
@@ -1631,19 +1637,27 @@ function level_skip()
 		if lvl_id>0 then
 		load_level(lvl_id-1)
 		music_stuff()
+		
+		pause_player=false
+		flash_bg=false
 		end
 	end
 	if btnp(1, 1) then
 		if lvl_id<30 then
 		load_level(lvl_id+1)
 		music_stuff()
+		
+		pause_player=false
+		flash_bg=false
 		end
 	end
 end
 
 function gem_skip()
- --gemskip toggle
-	if lvl_id<21 then max_djump=1 end
+	if lvl_id<=21 then 
+		max_djump=1
+		new_bg=false
+	end
 	if lvl_id>21 then
 		if btnp(5, 1) then
 			if max_djump==1 then 
@@ -1653,6 +1667,7 @@ function gem_skip()
    end
 			load_level(lvl_id)
 		end
+		new_bg=true
  end
 end
 
