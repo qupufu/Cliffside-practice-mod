@@ -1,3 +1,8 @@
+# Don't use this mod
+there's an injectable practice mod that can be found in the celeste classic discord so this mod is pretty pointless. The injectable version works way better than what I made so I'd recomend you download that instead.
+
+[Join the discord server!](https://discord.gg/9Dm3NCS)
+
 # Cliffside-practice-mod
 A simple practice mod for Rubyred's Cliffside. I don't even know lua so the code is probably pretty messy
 
