@@ -1705,6 +1705,11 @@ end
 function retry_screen()
 	--retry
 	if btnp(3, 1) then
+		pause_player=false
+		flash_bg=false
+		timer_ticking=false
+		timer_frames=0
+		
 		load_level(lvl_id)
 	end
 end
