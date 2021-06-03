@@ -1334,12 +1334,14 @@ function _draw()
   end)
   
   -- draw level title
---  if ui_timer>=-30 then
---  	if ui_timer<0 then
-  		draw_ui(camx,camy)
---  	end
---  	ui_timer-=1
---  end
+  if ui_timer>=-30 then
+  	if ui_timer<0 then
+  		draw_lvl_name(camx,camy)
+  	end
+  	ui_timer-=1
+  end
+  
+  draw_ui(camx,camy)
   
   -- credits
   if is_title() then
@@ -1393,16 +1395,6 @@ function draw_time(x,y)
 end
 
 function draw_ui(camx,camy)
---  if lvl_title and lvl_title=="" then return end
---
--- rectfill(24+camx,58+camy,104+camx,70+camy,0)
--- local title=lvl_title
--- if title then
---  ?title,hcenter(title,camx),62,7
--- else
--- 	local level=(1+lvl_id)*100
---  ?level.." m",52+(level<1000 and 2 or 0)+camx,62+camy,7
--- end
 	rectfill(2,2,14,8,0)
  draw_time(4+camx,4+camy)
  -- draw input display
@@ -1413,6 +1405,19 @@ function draw_ui(camx,camy)
  draw_button(30,7,3) -- d
  draw_button(17,7,4) -- z
  draw_button(21,7,5) -- x
+end
+
+function draw_lvl_name(camx,camy)
+ if lvl_title and lvl_title=="" then return end
+
+ rectfill(24+camx,58+camy,104+camx,70+camy,0)
+ local title=lvl_title
+ if title then
+  ?title,hcenter(title,camx),62,7
+ else
+ 	local level=(1+lvl_id)*100
+  ?level.." m",52+(level<1000 and 2 or 0)+camx,62+camy,7
+ end
 end
 
 function two_digit_str(x)
