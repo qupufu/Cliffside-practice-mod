@@ -1,5 +1,5 @@
 pico-8 cartridge // http://www.pico-8.com
-version 30
+version 32
 __lua__
 --~cliffside practice mod~
 --mod by: timm
@@ -16,7 +16,7 @@ __lua__
 --original game by:
 --matt thorson + noel berry
 
---practice mod v1.2
+--practice mod v1.3
 
 -- [data structures]
 
@@ -32,9 +32,9 @@ end
 
 objects,got_fruit,
 freeze,delay_restart,sfx_timer,music_timer,
-ui_timer=
+ui_timer,timer_frames=
 {},{},
-0,0,0,0,-99
+0,0,0,0,-99,0
 
 -- [entry point]
 
@@ -364,6 +364,8 @@ player_spawn={
 
   --reset timer after falling
   seconds,minutes=0,0
+  timer_frames=0
+  timer_ticking=true
   
       this.delay-=1
       this.spr=6
@@ -1066,6 +1068,11 @@ function destroy_object(obj)
 end
 
 function kill_player(obj)
+		--practice mod
+  level_time=nil
+  timer_ticking=false
+		
+		--regular stuff
   sfx_timer=12
   sfx(0)
   deaths+=1
@@ -1090,6 +1097,7 @@ function restart_level()
 end
 
 function next_level()
+		timer_ticking=false
   local next_lvl=lvl_id+0
   if next_lvl==30 then
     time_ticking=false
@@ -1170,6 +1178,10 @@ function _update()
     if seconds==0 then
       minutes+=1
     end
+  end
+  
+  if timer_frames!=999 and timer_ticking then
+  	timer_frames+=1
   end
   
   if music_timer>0 then
@@ -1322,12 +1334,12 @@ function _draw()
   end)
   
   -- draw level title
-  if ui_timer>=-30 then
-  	if ui_timer<0 then
+--  if ui_timer>=-30 then
+--  	if ui_timer<0 then
   		draw_ui(camx,camy)
-  	end
-  	ui_timer-=1
-  end
+--  	end
+--  	ui_timer-=1
+--  end
   
   -- credits
   if is_title() then
@@ -1374,22 +1386,33 @@ function draw_content(x,y,r,c)
 end
 
 function draw_time(x,y)
-  rectfill(x,y,x+32,y+6,0)
-  ?two_digit_str(minutes\60)..":"..two_digit_str(minutes%60)..":"..two_digit_str(seconds),x+1,y+1,7
+  rectfill(2,2,14,8,0)
+--  ?timer_frames,3,3,7
+  print(sub('00',1,3-#tostr(timer_frames)),3,3,1)
+  print(timer_frames,15-4*#tostr(timer_frames),3,7)
 end
 
 function draw_ui(camx,camy)
-  if lvl_title and lvl_title=="" then return end
-
- rectfill(24+camx,58+camy,104+camx,70+camy,0)
- local title=lvl_title
- if title then
-  ?title,hcenter(title,camx),62,7
- else
- 	local level=(1+lvl_id)*100
-  ?level.." m",52+(level<1000 and 2 or 0)+camx,62+camy,7
- end
+--  if lvl_title and lvl_title=="" then return end
+--
+-- rectfill(24+camx,58+camy,104+camx,70+camy,0)
+-- local title=lvl_title
+-- if title then
+--  ?title,hcenter(title,camx),62,7
+-- else
+-- 	local level=(1+lvl_id)*100
+--  ?level.." m",52+(level<1000 and 2 or 0)+camx,62+camy,7
+-- end
+	rectfill(2,2,14,8,0)
  draw_time(4+camx,4+camy)
+ -- draw input display
+ rectfill(16,2,37,10,0)
+ draw_button(26,7,0) -- l
+ draw_button(34,7,1) -- r
+ draw_button(30,3,2) -- u
+ draw_button(30,7,3) -- d
+ draw_button(17,7,4) -- z
+ draw_button(21,7,5) -- x
 end
 
 function two_digit_str(x)
@@ -1584,13 +1607,17 @@ function num2hex(number)
  return #resultstr==0 and "00" or #resultstr==1 and "0"..resultstr or resultstr
 end
 -->8
+--practice mod
+--code is really messy :l
+
 menuitem(1, "retry", function() retry() end)
 function retry()
 	load_level(lvl_id)
 end
 
---practice mod
---code is really messy :l
+function draw_button(x,y,b)
+ rectfill(x,y,x+2,y+2,btn(b) and 7 or 1)
+end
 
 --idk why it's mode and not mod
 function practice_mode()
@@ -1640,6 +1667,8 @@ function level_skip()
 		
 		pause_player=false
 		flash_bg=false
+		timer_ticking=false
+		timer_frames=0
 		end
 	end
 	if btnp(1, 1) then
@@ -1649,6 +1678,8 @@ function level_skip()
 		
 		pause_player=false
 		flash_bg=false
+		timer_ticking=false
+		timer_frames=0
 		end
 	end
 end
