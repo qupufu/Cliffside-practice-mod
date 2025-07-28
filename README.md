@@ -1,3 +1,5 @@
+archived. use the injectable practice mod from the [Celeste classic discord](https://discord.gg/9Dm3NCS) for a better experience.
+
 # Cliffside-practice-mod
 A simple practice mod for Rubyred's Cliffside. I don't even know lua so the code is probably pretty messy
 
